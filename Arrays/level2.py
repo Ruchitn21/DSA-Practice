@@ -18,7 +18,7 @@ def leftRotate1(arr):
 
 # print(leftRotate1([1,2,3,4,5]))
 
-# ==========================================================================================
+# ================================================================================================================================
 
 # rotate array by K places
 
@@ -78,7 +78,7 @@ def rotateK2(arr,k):
 # print(rotateK2([1,2,3,4,5,6,7],9))
 
 
-# =======================================================================================
+# =============================================================================================================================
 
 # move all zeroes at the end of the array
 
@@ -138,7 +138,7 @@ def moveZeroes2(arr):
 
 # print(moveZeroes2([1,0,3,5,9,0,0,6,7]))
 
-# ==============================================================================
+# ====================================================================================================================
 
 # union of 2 sorted arrays
 
@@ -199,4 +199,150 @@ def union2(arr1,arr2):
 
     return ans_arr
 
-print(union2([1,1,2,3,4,5],[2,3,4,4,5,6]))
+# print(union2([1,1,2,3,4,5],[2,3,4,4,5,6]))
+
+# ================================================================================================================================
+
+# find intersection of 2 sorted arrays. Also keep a check of duplicates
+
+# brute force
+# T.C. => O(n*m)
+# Extra space user => O(max(m)+min(n,m))
+def intersection1(arr1,arr2):
+
+    n= len(arr1)
+    m = len(arr2)
+
+    ans = []
+
+    visited= [0]*max(arr2)
+
+    for i in range(n):
+
+        for j in range(m):
+
+            if arr1[i]==arr2[j] and visited[arr2[j]]!=1:
+
+                ans.append(arr1[i])
+                visited[arr2[j]]=1
+    
+    return ans 
+
+# optimal approach
+def intersection2(arr1,arr2):
+
+    n= len(arr1)
+    m= len(arr2)
+
+    ans = []
+
+    i=0
+    j=0
+
+    while i<n and j<m:
+
+        if arr1[i]<arr2[j]:
+
+            i+=1
+        
+        elif arr1[i]>arr2[j]:
+            j+=1
+        
+        else:
+            ans.append(arr1[i])
+            i+=1
+            j+=1
+    
+    return ans
+        
+# print(intersection2([1,1,2,2,3,3,4,4],[1,1,2,2,3,3,4,4]))
+
+# =====================================================================================================================================
+
+# Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+# brute force
+# T.C. => O(n+nlogn)
+def missingNumber(arr):
+
+    hashmap = dict()
+
+    for i in range(len(arr)):
+
+        if arr[i] not in hashmap:
+            hashmap[arr[i]]=1
+        
+    for i in range(0,len(arr)):
+
+        if i not in hashmap:
+            return i
+
+    return -1
+
+# optimal approach
+def missingNumber2(arr):
+    
+    n= len(arr)
+
+    total_sum= (n*(n+1))//2
+
+    arr_sum = sum(arr)
+
+    return total_sum-arr_sum
+
+# print(missingNumber2([0,3,1]))
+
+# =====================================================================================================================================
+
+# max consecutive ones
+
+# brute and optimal approach
+# T.C. => O(n)
+# Extra Space => O(1)
+def maxConsecutiveOnes(arr):
+
+    n = len(arr)
+
+    cnt_ones= 0
+
+    ans = -1
+
+    for i in range(n):
+
+        if arr[i]==1:
+            cnt_ones+=1
+
+            ans = max(ans,cnt_ones)
+        
+        else:
+            cnt_ones = 0
+    
+    return ans
+
+# print(maxConsecutiveOnes([1,1,0,1,1,1,0,1,1]))
+
+# =======================================================================================================
+
+# find the number that appears once among other numbers that appear more than once
+
+# brute force approach
+# T.C. => O(nlogm + 
+def numberOnce(arr):
+
+    hashmap = {}
+
+    for i in range(len(arr)):
+
+        if arr[i] not in hashmap:
+            hashmap[arr[i]]=1
+        else:
+            hashmap[arr[i]]+=1
+
+    # return hashmap
+    
+    for i in range(len(arr)):
+        if hashmap[arr[i]]==1:
+            return arr[i]
+        
+    return -1
+print(numberOnce([4,1,2,1,2]))
