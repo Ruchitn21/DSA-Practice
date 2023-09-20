@@ -55,6 +55,7 @@ def LongestsubArrSumK2(arr,k):
 
 # optimal approach
 # sliding window
+# this approach will only work if the elements are 0 or positive
 # T.C. => O(2N)
 # Extra Space => O(1)
 def LongestsubArrSumK3(arr, k):
