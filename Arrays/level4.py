@@ -63,3 +63,81 @@ def twoSum3(arr,k):
 print(twoSum3([3,2,4],9))
 
 # ========================================================================================================================================================================
+
+# Sort an array of 0s 1s and 2s
+
+# brute force approach would be to sort the array
+# T.C. => O(nlogn)
+# Extra Space => O(1)
+
+# better approach
+# T.C. => O(N+N) => O(2N)
+# Extra Space => O(1)
+def sortArray(arr):
+
+    n = len(arr)
+
+    cnt_0 = 0
+    cnt_1 = 0
+    cnt_2 = 0
+
+    for i in range(n):
+
+        if arr[i]==0:
+            cnt_0+=1
+        
+        if arr[i]==1:
+            cnt_1+=1
+        
+        if arr[i]==2:
+            cnt_2+=1
+    
+    i = 0
+
+    while cnt_0>0:
+        arr[i] = 0
+        cnt_0-=1
+        i+=1
+
+    while cnt_1>0:
+        arr[i] = 1
+        cnt_1-=1
+        i+=1
+    
+    while cnt_2>0:
+        arr[i] = 2
+        cnt_2-=1
+        i+=1
+    
+    return arr
+
+# optimized approach
+# dutch national flag algorithm
+# T.C. => O(N)
+# Extra Space Used => O(1)
+def sortArray2(arr):
+
+    n = len(arr)
+
+    low = 0
+    mid = 0
+    high = n-1
+
+    while mid<=high:
+
+        if arr[mid]==0:
+            arr[low],arr[mid] = arr[mid],arr[low]
+            low+=1
+            mid+=1
+        
+        elif arr[mid]==1:
+            mid+=1
+        
+        else:
+            arr[mid],arr[high] = arr[high],arr[mid]
+            high-=1
+        
+    return arr
+
+
+print(sortArray2([0,2,1,2,2,0,0,1,2,1,2,0]))
