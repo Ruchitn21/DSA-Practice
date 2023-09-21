@@ -60,7 +60,7 @@ def twoSum3(arr,k):
     
     return "No Pair for Sum is present"
 
-print(twoSum3([3,2,4],9))
+# print(twoSum3([3,2,4],9))
 
 # ========================================================================================================================================================================
 
@@ -140,4 +140,92 @@ def sortArray2(arr):
     return arr
 
 
-print(sortArray2([0,2,1,2,2,0,0,1,2,1,2,0]))
+# print(sortArray2([0,2,1,2,2,0,0,1,2,1,2,0]))
+
+# ========================================================================================================================================================================
+
+# Majority Element (an element that occurs more than n/2 times in an array)
+
+# brute force approach
+# T.C. => O(n^2)
+# Extra Space => O(1)
+def majorityElement(arr):
+
+    n= len(arr)
+
+    for i in range(n):
+
+        count = 0
+
+        number = arr[i]
+
+        for j in range(i,n):
+
+            if arr[j]==number:
+                count+=1
+
+        if count>(n//2):
+            return arr[i]
+        
+    return -1
+
+# better approach
+# using hashing
+# T.C. => O(nlogn)
+# Extra Space => O(n)
+def majorityElement2(arr):
+
+    n = len(arr)
+
+    hashmap = {}
+
+    for i in range(n):
+
+        if arr[i] not in hashmap:
+            hashmap[arr[i]]=1
+        else:
+            hashmap[arr[i]]+=1
+    
+    for i in hashmap:
+        if hashmap[i]>n//2:
+            return i
+
+    return -1
+
+# optimized approach
+# Moore's Voting Algorithm
+# T.c. => O(n)
+# Extra Space => O(1)
+def majorityElement3(arr):
+
+    n = len(arr)
+
+    cnt = 0
+    element = arr[0]
+
+    for i in range(n):
+
+        if cnt==0:
+            element = arr[i]
+            cnt=1
+
+        if arr[i]==element:
+            cnt+=1
+
+        else:
+            cnt-=1
+
+
+    cnt = 0
+    for i in range(n):
+
+        if arr[i]==element:
+            cnt+=1
+    
+    if cnt>n//2:
+        return element
+    return -1
+
+
+print(majorityElement3([6,5,5,6,6,6,6,5,5,5,5,5,5]))
+
