@@ -142,7 +142,7 @@ def sortArray2(arr):
 
 # print(sortArray2([0,2,1,2,2,0,0,1,2,1,2,0]))
 
-# ========================================================================================================================================================================
+# =================================================================================================================================
 
 # Majority Element (an element that occurs more than n/2 times in an array)
 
@@ -227,5 +227,106 @@ def majorityElement3(arr):
     return -1
 
 
-print(majorityElement3([6,5,5,6,6,6,6,5,5,5,5,5,5]))
+# print(majorityElement3([6,5,5,6,6,6,6,5,5,5,5,5,5]))
 
+# =================================================================================================================================
+
+# Maximum Subarray Sum
+
+# brute force approach
+# T.C. => O(n^2)
+# Extra Space => O(1)
+def maxSubarrSum(arr):
+
+    n = len(arr)
+
+    if n==0:
+        return arr[0]
+
+    ans = -9999999999
+
+    for i in range(n):
+
+        sum = 0
+
+        for j in range(i,n):
+
+            sum+=arr[j]
+
+            ans = max(ans,sum)
+    
+    return ans
+
+# optimized approach
+# Kadane's Algorithm
+# T.C. => O(N)
+# Extra Space => O(1)
+def maxSubarrSum2(arr):
+
+    n= len(arr)
+
+    if n==1:
+        return arr[0]
+
+    maxi = -999999999
+
+    sum = 0
+
+    for i in range(n):
+
+        sum+=arr[i]
+
+        if sum<0:
+            sum=0
+                
+        maxi = max(maxi,sum)
+            
+    if maxi==0:
+        return max(arr)
+    return maxi
+
+# follow up queston possible
+
+# There might be more than one subarray with the maximum sum. We need to print any of them
+
+#  approach is to store the starting index and the ending index of the subarray. Thus we can easily get the subarray afterward without actually storing the subarray elements.
+
+# If we carefully observe our algorithm, we can notice that the subarray always starts at the particular index where the sum variable is equal to 0, and at the ending index, the sum always crosses the previous maximum sum(i.e. maxi).
+
+def maxSubArrSum3(arr):
+
+    n = len(arr)
+
+    sum =0
+
+    maxi = -999999999999
+
+    start  = 0
+    ansStart , ansEnd = -1,-1
+
+    for i in range(n):
+
+        if sum==0:
+            start = i
+
+        sum+= arr[i]
+
+        if sum>maxi:
+
+            maxi = sum
+            ansStart = start
+            ansEnd = i
+        
+        if sum<0:
+            sum = 0
+
+    return ansStart, ansEnd
+
+arr = [-2,-3,1,2]
+startIdx,endIdx = maxSubArrSum3(arr)
+
+for i in range(startIdx,endIdx):
+    print(arr[i],end=" ")
+
+
+# =================================================================================================================================
