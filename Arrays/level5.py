@@ -111,3 +111,32 @@ def rearrangeSigns3(arr):
     return arr
 
 print(rearrangeSigns3([3,1,-2,-5,2,-4,-5,-9,-8,-10]))
+
+# =====================================================================================================================
+
+# Stock buy sell problem
+# You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+# You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+# Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+# brute force approach
+def stockProblem(arr):
+    
+    n = len(arr)
+
+    mini = arr[0]
+
+    maxProfit = 0
+
+    for i in range(n):
+
+        cost = arr[i] - mini
+
+        maxProfit = max(maxProfit,cost)
+
+        mini = min(mini,arr[i])
+    
+    return maxProfit
+
+print(stockProblem([7,1,5,3,6,4]))
