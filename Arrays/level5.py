@@ -110,7 +110,7 @@ def rearrangeSigns3(arr):
 
     return arr
 
-print(rearrangeSigns3([3,1,-2,-5,2,-4,-5,-9,-8,-10]))
+# print(rearrangeSigns3([3,1,-2,-5,2,-4,-5,-9,-8,-10]))
 
 # =====================================================================================================================
 
@@ -139,4 +139,147 @@ def stockProblem(arr):
     
     return maxProfit
 
-print(stockProblem([7,1,5,3,6,4]))
+# print(stockProblem([7,1,5,3,6,4]))
+
+# ===========================================================================================================
+
+# Leaders in an Array
+# Leaders are those elements which are greater then all the elements in their right
+
+# Brute Force Approach
+# T.C. => O(N^2)
+# Extra Space used => O(N) => in worst case when the array is in decreasing order and all elements will become leaders
+def leaderArray(arr):
+
+    n = len(arr)
+
+    leaders= []
+
+    for i in range(n):
+
+        leader = True
+
+        for j in range(i+1,n):
+
+            if arr[j]>arr[i]:
+                leader = False
+                break
+
+        if leader:
+            leaders.append(arr[i])
+
+    return leaders
+
+# optimized approach
+# T.c. => O(N)
+# Extra Space => O(N) => in worst case when the array is in decreasing order and all elements will become leaders
+def leaderArray2(arr):
+
+    n = len(arr)
+
+    leaders= [arr[n-1]]
+
+    max_right = arr[n-1]
+
+    for i in range(n-1,-1,-1):
+
+        if arr[i]>max_right:
+
+            leaders.append(arr[i])
+
+            max_right = arr[i]
+    
+    return leaders[::-1]
+
+# print(leaderArray2([10,22,12,3,0,6]))
+
+# ====================================================================================================================================
+
+# Longest Consecutive Sequence
+# Return the length of the consecutive sequence
+
+# brute force approach
+# T.C. => O(N^2)
+def longestConsecutive(arr):
+
+    n = len(arr)
+
+    maxLength = 0
+
+    for i in range(n):
+
+        length = 1
+        for j in range(n):
+
+            if arr[i]==arr[j]:
+                length+=1
+                maxLength = max(maxLength,length)
+    
+    return maxLength
+
+# better approach
+# T.C. => O(nlogn + N)
+# Extra Space Used => O(1)
+def longestConsecutive2(arr):
+
+    n= len(arr)
+
+    arr.sort()
+
+    count = 0
+    longest = 1
+
+    lastSmaller= -9999999999999
+
+    for i in range(n):
+
+        if arr[i]-1==lastSmaller:
+            count+=1
+            lastSmaller = arr[i]
+        elif arr[i]!=lastSmaller:
+            count = 1
+            lastSmaller = arr[i]
+
+        longest = max(longest, count)
+    
+    return longest
+
+# Optimized Approach
+# We will adopt a similar approach to the brute-force method but with optimizations in the search process. Instead of searching sequences for every array element as in the brute-force approach, we will focus solely on finding sequences only for those numbers that can be the starting numbers of the sequences. This targeted approach narrows down our search and improves efficiency.
+
+# We will do this with the help of the Set data structure.
+
+# T.c.=> O(3N)
+# Extra space Used => O(N)
+def longestConsecutive3(arr):
+
+    n = len(arr)
+    
+    count = 0
+
+    longest = 1
+
+    hashset = set()
+
+    for i in arr:
+        hashset.add(i)
+    
+    for i in hashset:
+
+        if i-1 not in hashset:
+            x = i
+            count = 1
+
+            while x+1 in hashset:
+                count+=1
+                x+=1
+            
+            longest = max(longest,count)
+    
+    return longest
+
+print(longestConsecutive3([102,4,100,1,101,3,2,1,1]))
+
+# [1,1,1,2,3,4,100,101,102]
+
+            
