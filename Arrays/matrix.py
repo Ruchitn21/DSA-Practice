@@ -28,7 +28,7 @@ def spiralTraversal(matrix):
         
         right-=1
         # 3rd right to left
-        if(top<=bottom)
+        if(top<=bottom):
             for i in range(right,left-1,-1):
                 ans.append(matrix[bottom][i])
             
