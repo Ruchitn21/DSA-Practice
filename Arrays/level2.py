@@ -326,7 +326,29 @@ def maxConsecutiveOnes(arr):
 # find the number that appears once among other numbers that appear more than once
 
 # brute force approach
-# T.C. => O(nlogm + 
+# using linear search for every element
+# T.C. => O(n^2)
+# Extra Space => O(1)
+def uniqueElement(arr):
+    
+    for i in range(len(arr)):
+        
+        count = 0
+        
+        for j in range(len(arr)):
+            
+            if arr[j]==arr[i]:
+                
+                count+=1
+        
+        if count==1:
+            return arr[i]
+            
+    return -1
+
+# Better Approach
+# using hashmap to store frequencies of every element
+# T.C. => O(nlogm + n)
 def numberOnce(arr):
 
     hashmap = {}
@@ -345,4 +367,18 @@ def numberOnce(arr):
             return arr[i]
         
     return -1
+
+# Optimized Approach
+# using XOR in the whole array
+# T.C. => O(N)
+# Extra Space => O(1)
+def uniqueElement2(arr):
+
+    ans = 0
+    
+    for i in range(len(arr)):
+        ans^=arr[i]
+
+    return ans
+    
 print(numberOnce([4,1,2,1,2]))
